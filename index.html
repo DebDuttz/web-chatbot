@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Solo Leveling Potion Chatbot</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+      color: #f8fafc;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    .chat-container {
+      width: 400px;
+      max-width: 90%;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+      display: flex;
+      flex-direction: column;
+      height: 600px;
+    }
+    h1 {
+      text-align: center;
+      font-weight: 800;
+      font-size: 22px;
+      margin-bottom: 10px;
+      color: #a78bfa;
+    }
+    .chat-box {
+      flex: 1;
+      overflow-y: auto;
+      padding: 10px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.02);
+    }
+    .message {
+      margin: 8px 0;
+      padding: 10px 14px;
+      border-radius: 12px;
+      max-width: 80%;
+      line-height: 1.4;
+      word-wrap: break-word;
+      font-size: 14px;
+    }
+    .user {
+      background: #6366f1;
+      align-self: flex-end;
+      color: white;
+    }
+    .bot {
+      background: rgba(255, 255, 255, 0.1);
+      align-self: flex-start;
+      color: #e2e8f0;
+    }
+    .input-area {
+      display: flex;
+      margin-top: 10px;
+      gap: 10px;
+    }
+    input {
+      flex: 1;
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      font-size: 14px;
+    }
+    input::placeholder {
+      color: #94a3b8;
+    }
+    button {
+      background: linear-gradient(90deg, #8b5cf6, #06b6d4);
+      border: none;
+      padding: 12px 16px;
+      border-radius: 10px;
+      color: #0f172a;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    footer {
+      margin-top: 14px;
+      font-size: 12px;
+      color: #94a3b8;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="chat-container">
+    <h1>💬 Solo Leveling Potion Chatbot</h1>
+    <div class="chat-box" id="chat-box">
+      <div class="message bot">Greetings, Hunter! Which potion do you seek today?</div>
+    </div>
+    <div class="input-area">
+      <input type="text" id="user-input" placeholder="Ask about a potion..." />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+  <footer>Solo Leveling Potion Chatbot © 2025</footer>
+
+  <script>
+    const potions = {
+      'elixir of life': 'The Elixir of Life restores all HP and revives once. Rank: SSS.',
+      'shadow essence draught': 'Doubles mana output temporarily. Handle with care, Hunter. Rank: SS.',
+      'rebirth nectar': 'A mythical potion that grants rebirth after death with enhanced potential.',
+      "hunter's vitality brew": 'Restores HP and stamina — the favorite of B-rank hunters.'
+    };
+
+    const chatBox = document.getElementById('chat-box');
+    const userInput = document.getElementById('user-input');
+
+    function sendMessage() {
+      const message = userInput.value.trim();
+      if (!message) return;
+
+      appendMessage(message, 'user');
+      userInput.value = '';
+      setTimeout(() => replyMessage(message), 600);
+    }
+
+    function appendMessage(text, sender) {
+      const msg = document.createElement('div');
+      msg.classList.add('message', sender);
+      msg.textContent = text;
+      chatBox.appendChild(msg);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function replyMessage(message) {
+      const lower = message.toLowerCase();
+      let reply = "I couldn't find that potion, Hunter. Try asking about another one.";
+
+      for (const key in potions) {
+        if (lower.includes(key)) {
+          reply = potions[key];
+          break;
+        }
+      }
+
+      appendMessage(reply, 'bot');
+    }
+
+    userInput.addEventListener('keypress', e => {
+      if (e.key === 'Enter') sendMessage();
+    });
+  </script>
+</body>
+</html>
